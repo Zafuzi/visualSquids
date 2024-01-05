@@ -1,3 +1,5 @@
+import * as ThingEditor from "./thingEditor.mjs";
+
 export let canvas, ctx;
 export let things = [];
 export let screenSize = {
@@ -180,7 +182,7 @@ function keyboardHandler(evt) {
 			break;
 		case "keyup":
 			if(key === "escape") {
-				togglePause();
+				ThingEditor.deselect();
 			}
 			delete keyboard[key];
 			break;

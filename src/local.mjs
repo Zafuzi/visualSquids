@@ -5,8 +5,6 @@ import * as ThingEditor from "./thingEditor.mjs";
 Squids.initialize(document.body, gameUpdate, gameDraw);
 ThingEditor.init();
 
-let selectedThing = null;
-
 window.addEventListener("resize", () => {
 	Squids.resizeCanvas({
 		width: window.innerWidth,
@@ -42,7 +40,6 @@ Squids.canvas.addEventListener("click", (evt) => {
 	});
 
 	if(clickedThing) {
-		selectedThing = clickedThing;
 		ThingEditor.populateThingEditor(clickedThing);
 		return;
 	}
@@ -59,24 +56,10 @@ Squids.canvas.addEventListener("click", (evt) => {
 		color: "white",
 		draw() {
 			Squids.default_draw(this);
-			if(selectedThing === this) {
-				Squids.ctx.strokeStyle = "white";
-				let width, height;
-				if(this.image) {
-					width = this.image.width;
-					height = this.image.height;
-				}
-				else if(this.text) {
-					width = Squids.ctx.measureText(this.text).width;
-					height = this.font.size;
-				}
-				Squids.ctx.strokeRect(this.position.x - 8, this.position.y - 8, width + 16, height + 16);
-			}
 		}
 	});
 	Squids.addThing(newThing);
 
-	selectedThing = newThing;
 	ThingEditor.populateThingEditor(newThing);
 });
 
@@ -94,4 +77,6 @@ function gameDraw() {
 	Squids.ctx.textBaseline = "top";
 	Squids.ctx.textAlign = "right";
 	Squids.ctx.fillText(`Keyboard state: ${JSON.stringify(Squids.keyboard)}`, Squids.screenSize.width, 0);
+
+	ThingEditor.drawHighlight();
 }

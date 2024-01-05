@@ -14,7 +14,7 @@ export let isPaused = true;
 
 export let keyboard = {};
 
-export function initialize(rootElement) {
+export function initialize(rootElement, update, draw) {
 	// create a canvas and render to the page
 	canvas = document.createElement("canvas");
 	canvas.id = "squids-canvas";
@@ -29,8 +29,12 @@ export function initialize(rootElement) {
 	canvas.addEventListener("mouseup", mouseHandler);
 	canvas.addEventListener("wheel", mouseHandler);
 	canvas.addEventListener("dblclick", mouseHandler);
-	canvas.addEventListener("keydown", keyboardHandler);
-	canvas.addEventListener("keyup", keyboardHandler);
+
+	window.addEventListener("keydown", keyboardHandler);
+	window.addEventListener("keyup", keyboardHandler);
+
+	_globalUpdate = update || _globalUpdate;
+	_globalDraw = draw || _globalDraw;
 }
 
 export function resizeCanvas(newScreeSize) {
@@ -61,12 +65,22 @@ export function loadImage(src) {
 	});
 }
 
+export let _globalUpdate;
+export let _globalDraw;
+
 export function update() {
+	if(typeof _globalUpdate === "function") {
+		_globalUpdate();
+	}
 	things.forEach(thing => thing.update());
 }
 
 export function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	if(typeof _globalDraw === "function") {
+		_globalDraw();
+	}
 	things.forEach(thing => thing.draw());
 }
 
@@ -95,6 +109,7 @@ export function default_draw(thing) {
 		}
 		ctx.font = `${thing.font.size}px ${thing.font.family}`;
 		ctx.textBaseline = "top";
+		ctx.textAlign = "left";
 		ctx.fillText(thing.text, thing.position.x, thing.position.y);
 		if(thing.stroke) {
 			ctx.strokeStyle = thing.stroke;
@@ -153,5 +168,24 @@ function mouseHandler(evt) {
 }
 
 function keyboardHandler(evt) {
-	keyboard[evt.key] = evt.type === "keydown";
+	let key = evt.key.toLowerCase();
+
+	if(evt.key === " ") {
+		key = "Space";
+	}
+
+	switch(evt.type) {
+		case "keydown":
+			keyboard[key] = true;
+			break;
+		case "keyup":
+			if(key === "escape") {
+				isPaused = !isPaused;
+			}
+			delete keyboard[key];
+			break;
+		case "keypress":
+			break;
+	}
+
 }

@@ -2,7 +2,7 @@ import * as Squids from "./squids.mjs";
 import * as helloWorld from "./things/helloWorld.js";
 import * as ThingEditor from "./thingEditor.mjs";
 
-Squids.initialize(document.body);
+Squids.initialize(document.body, gameUpdate, gameDraw);
 ThingEditor.init();
 
 let selectedThing = null;
@@ -15,7 +15,7 @@ window.addEventListener("resize", () => {
 });
 
 Squids.canvas.addEventListener("click", (evt) => {
-	// determin if click happened on a thing
+	// determine if click happened on a thing
 	const things = Squids.things.filter(thing => thing.alive);
 	const clickedThing = things.find(thing => {
 		if(thing.image) {
@@ -83,3 +83,15 @@ Squids.canvas.addEventListener("click", (evt) => {
 Squids.start();
 
 helloWorld.init();
+
+function gameUpdate() {
+}
+
+function gameDraw() {
+	// draw keyboard state in top left corner
+	Squids.ctx.fillStyle = "white";
+	Squids.ctx.font = "20px Arial";
+	Squids.ctx.textBaseline = "top";
+	Squids.ctx.textAlign = "right";
+	Squids.ctx.fillText(`Keyboard state: ${JSON.stringify(Squids.keyboard)}`, Squids.screenSize.width, 0);
+}

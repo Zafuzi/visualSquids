@@ -11,6 +11,9 @@ export function init() {
 		},
 		color: "white",
 		update() {
+			if(!this.alive) {
+				return;
+			}
 			this.position.x += 1;
 			this.position.y += 1;
 

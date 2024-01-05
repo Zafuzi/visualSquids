@@ -1,4 +1,5 @@
 import * as ThingEditor from "./thingEditor.mjs";
+import {rplc8ThingsList} from "./thingEditor.mjs";
 
 export let canvas, ctx;
 export let things = [];
@@ -48,6 +49,7 @@ export function resizeCanvas(newScreeSize) {
 
 export function addThing(thing) {
 	things.push(thing);
+	ThingEditor.rplc8ThingsList();
 }
 
 export function removeThing(thing) {
@@ -102,6 +104,10 @@ export function start() {
 }
 
 export function default_draw(thing) {
+	if(!thing.alive) {
+		return;
+	}
+
 	if (thing.image) {
 		ctx.drawImage(thing.image, thing.position.x, thing.position.y);
 	}
@@ -120,7 +126,15 @@ export function default_draw(thing) {
 	}
 }
 
+export let seqNum = 0;
+export function seq() {
+	seqNum += 1;
+	return seqNum;
+}
+
 export class Thing {
+	id = seq();
+
 	alive = false;
 
 	position = {

@@ -1,6 +1,7 @@
 {
     "dependencies": {
-        "electron-reloader": "^1.0.1"
+        "electron-reloader": "^1.0.1",
+        "rplc8": "^1.1.0"
     },
     "devDependencies": {
         "electron": "^10.1.5"

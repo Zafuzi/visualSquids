@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="thingEditor" draggable="true">
-	<header id="thingEditor_header">Thing Editor</header>
+	<header id="thingEditor_header">Properties</header>
 	<main id="thingEditor_content">
 		<p>Nothing selected</p>
 	</main>
@@ -18,7 +18,17 @@
 	<button id="gameControls_pause">Pause</button>
 	<button id="gameControls_reset" class="red">Reset</button>
 </div>
+<div id="thingsList">
+	<header id="thingsList_header">Things</header>
+	<main id="thingsList_content">
+		<div class="thingsList_content_thing" id="r8_thing">
+			<p>id: __id__</p>
+			<p>alive: __alive__</p>
+		</div>
+	</main>
+</div>
 <script src="draggable.js"></script>
+<script src="rplc8.js"></script>
 <script type="module" src="local.mjs"></script>
 </body>
 </html>

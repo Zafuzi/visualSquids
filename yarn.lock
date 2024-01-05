@@ -651,6 +651,11 @@ roarr@^2.15.3:
     semver-compare "^1.0.0"
     sprintf-js "^1.1.2"
 
+rplc8@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/rplc8/-/rplc8-1.1.0.tgz#12b68a1e475381bba15aafaa2cd04e9b039d94ee"
+  integrity sha512-cawKSIrji9CqlZ6ZD1cmCzAkPJkAqWRYtJwvuSs+UVnRzL1Pe1aXvw7RaOdpC2gODvxBu1dR34XCERy6Ox4XHQ==
+
 safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz"

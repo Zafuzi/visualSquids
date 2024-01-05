@@ -3,6 +3,9 @@ import * as Squids from "./squids.mjs";
 const thingEditor = document.getElementById("thingEditor");
 const thingEditor_content = thingEditor.querySelector("#thingEditor_content");
 
+const thingsList = document.getElementById("thingsList");
+const thingsList_content = thingEditor.querySelector("#thingsList_content");
+
 export let selectedThing;
 
 function dragElement(element) {
@@ -59,6 +62,15 @@ function dragElement(element) {
 
 export function init() {
 	dragElement(thingEditor);
+
+	thingEditor.querySelector("header").addEventListener("dblclick", () => {
+		thingEditor.querySelector("#thingEditor_content").classList.toggle("hidden");
+	});
+
+	dragElement(thingsList);
+	thingsList.querySelector("header").addEventListener("dblclick", () => {
+		thingsList.querySelector("#thingsList_content").classList.toggle("hidden");
+	});
 }
 
 export function populateThingEditor(thing) {
@@ -68,6 +80,10 @@ export function populateThingEditor(thing) {
 	}
 	selectedThing = thing;
 	thingEditor_content.innerHTML = `
+		<form>
+			<label for="thingEditor_alive">Alive</label>
+			<input type="checkbox" id="thingEditor_alive" name="thingEditor_alive" ${thing.alive ? "checked" : ""}>
+		</form>
 		<p>Position: ${thing.position.x}, ${thing.position.y}</p>	
 		<p>Velocity: ${thing.velocity.x}, ${thing.velocity.y}</p>
 		<p>Image: ${thing.image ? thing.image.src : "none"}</p>
@@ -78,6 +94,13 @@ export function populateThingEditor(thing) {
 		<p>Update: ${thing.update ? thing.update.toString() : "none"}</p>
 		<p>Draw: ${thing.draw ? thing.draw.toString() : "none"}</p>
 	`;
+
+	// add event listeners
+	const aliveCheckbox = thingEditor.querySelector("#thingEditor_alive");
+	aliveCheckbox.addEventListener("change", () => {
+		thing.alive = aliveCheckbox.checked;
+		console.log(thing);
+	});
 }
 
 export function drawHighlight() {
@@ -111,4 +134,13 @@ export function drawHighlight() {
 export function deselect() {
 	selectedThing = null;
 	populateThingEditor();
+}
+
+const r8_thing = rplc8("#r8_thing");
+export function rplc8ThingsList() {
+	r8_thing.update(Squids.things, (element, thing) => {
+		element.addEventListener("click", () => {
+			populateThingEditor(thing);
+		});
+	});
 }

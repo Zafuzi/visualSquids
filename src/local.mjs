@@ -82,8 +82,7 @@ function gameDraw() {
 	Squids.ctx.fillStyle = "white";
 	Squids.ctx.font = "20px Arial";
 	Squids.ctx.textBaseline = "top";
-	Squids.ctx.textAlign = "right";
-	Squids.ctx.fillText(`Keyboard state: ${JSON.stringify(Squids.keyboard)}`, Squids.screenSize.width, 0);
+	Squids.ctx.fillText(`Keyboard state: ${JSON.stringify(Squids.keyboard)}`, 16, Squids.screenSize.height - 36);
 
 	ThingEditor.drawHighlight();
 }

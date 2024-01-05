@@ -38,6 +38,15 @@ html {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+
+	max-height: 300px;
+	overflow-y: scroll;
+}
+
+#thingEditor_content.hidden {
+	display: none;
+	appearance: none;
+	visibility: hidden;
 }
 
 #gameControls {
@@ -76,4 +85,49 @@ html {
 #gameControls button.red {
 	background: #dd0033;
 	color: white;
+}
+
+#thingsList {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	width: 300px;
+	background: rgba(0,0,0,0.5);
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+}
+
+#thingsList_header {
+	width: 100%;
+	height: 32px;
+	background: rgba(0,0,0,0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#thingsList_content {
+	padding: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
+	max-height: 300px;
+	height: 100%;
+	overflow-y: scroll;
+}
+
+.thingsList_content_thing {
+	cursor: pointer;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#thingsList_content.hidden {
+	display: none;
+	appearance: none;
+	visibility: hidden;
 }

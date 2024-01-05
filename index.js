@@ -34,6 +34,7 @@ function createWindow() {
 		autoHideMenuBar: true,
 		backgroundColor: "#fff",
 		fullscreenable: true,
+		titleBarStyle: "hiddenInset",
 		webPreferences: {
 			contextIsolation: true,
 			nodeIntegration: true,

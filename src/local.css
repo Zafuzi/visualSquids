@@ -39,3 +39,41 @@ html {
 	flex-direction: column;
 	gap: 8px;
 }
+
+#gameControls {
+	position: absolute;
+	top: 16px;
+	left: 50%;
+	background: rgba(0,0,0,0.5);
+	color: #fff;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 8px;
+
+	transform: translate(-50%, 0);
+}
+
+#gameControls button {
+	padding: 4px 16px;
+	background: #ddd;
+	font-weight: bold;
+	border: none;
+	border-radius: 4px;
+}
+
+#gameControls button:hover {
+	opacity: 0.8;
+}
+
+#gameControls button.green {
+	background: #134b13;
+	color: white;
+}
+
+#gameControls button.red {
+	background: #dd0033;
+	color: white;
+}

@@ -80,3 +80,22 @@ function gameDraw() {
 
 	ThingEditor.drawHighlight();
 }
+
+const pauseButton = document.getElementById("gameControls_pause");
+const resetButton = document.getElementById("gameControls_reset");
+
+pauseButton.addEventListener("click", () => {
+	Squids.togglePause();
+	if(Squids.isPaused) {
+		pauseButton.innerText = "Resume";
+		pauseButton.classList.add("green");
+	}
+	else {
+		pauseButton.innerText = "Pause";
+		pauseButton.classList.remove("green");
+	}
+});
+
+resetButton.addEventListener("click", () => {
+	Squids.reset();
+});

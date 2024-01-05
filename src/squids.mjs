@@ -180,12 +180,19 @@ function keyboardHandler(evt) {
 			break;
 		case "keyup":
 			if(key === "escape") {
-				isPaused = !isPaused;
+				togglePause();
 			}
 			delete keyboard[key];
 			break;
 		case "keypress":
 			break;
 	}
+}
 
+export function togglePause() {
+	isPaused = !isPaused;
+}
+
+export function reset() {
+	window.location.reload();
 }

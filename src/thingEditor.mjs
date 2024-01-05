@@ -50,6 +50,14 @@ export function populateThingEditor(thing) {
 	selectedThing = thing;
 	thingEditor_content.innerHTML = `
 		<p>Position: ${thing.position.x}, ${thing.position.y}</p>	
+		<p>Velocity: ${thing.velocity.x}, ${thing.velocity.y}</p>
+		<p>Image: ${thing.image ? thing.image.src : "none"}</p>
+		<p>Font: ${thing.font ? `${thing.font.size}px ${thing.font.family}` : "none"}</p>
+		<p>Text: ${thing.text ? thing.text : "none"}</p>
+		<p>Color: ${thing.color ? thing.color : "none"}</p>
+		<p>Stroke: ${thing.stroke ? thing.stroke : "none"}</p>
+		<p>Update: ${thing.update ? thing.update.toString() : "none"}</p>
+		<p>Draw: ${thing.draw ? thing.draw.toString() : "none"}</p>
 	`;
 }
 

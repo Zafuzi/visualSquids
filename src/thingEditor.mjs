@@ -35,16 +35,15 @@ function dragElement(element) {
 		pos4 = e.clientY;
 
 		// limit movement to within the window
-		if(element.offsetTop - pos2 < 0) {
+		if (element.offsetTop - pos2 < 0) {
 			pos2 = element.offsetTop;
-		}
-		else if(element.offsetTop - pos2 > window.innerHeight - element.offsetHeight) {
+		} else if (element.offsetTop - pos2 > window.innerHeight - element.offsetHeight) {
 			pos2 = element.offsetTop - window.innerHeight + element.offsetHeight;
 		}
 
-		if(element.offsetLeft - pos1 < 0) {
+		if (element.offsetLeft - pos1 < 0) {
 			pos1 = element.offsetLeft;
-		} else if(element.offsetLeft - pos1 > window.innerWidth - element.offsetWidth) {
+		} else if (element.offsetLeft - pos1 > window.innerWidth - element.offsetWidth) {
 			pos1 = element.offsetLeft - window.innerWidth + element.offsetWidth;
 		}
 
@@ -73,17 +72,24 @@ export function init() {
 	});
 }
 
-export function populateThingEditor(thing) {
-	if(!thing) {
+export function populateThingEditor(thing, doFullUpdate = false) {
+	thing = thing || selectedThing;
+
+	if (!thing) {
 		thingEditor_content.innerHTML = "Nothing selected";
 		return;
 	}
+
+
 	selectedThing = thing;
-	thingEditor_content.innerHTML = `
-		<form>
-			<label for="thingEditor_alive">Alive</label>
-			<input type="checkbox" id="thingEditor_alive" name="thingEditor_alive" ${thing.alive ? "checked" : ""}>
+	let contentString = `
+		<form class="flex flow-column">
+			<label>
+				Alive
+				<input type="checkbox" id="thingEditor_alive" name="thingEditor_alive" ${thing.alive ? "checked" : ""}>
+			</label>
 		</form>
+		
 		<p>Position: ${thing.position.x}, ${thing.position.y}</p>	
 		<p>Velocity: ${thing.velocity.x}, ${thing.velocity.y}</p>
 		<p>Image: ${thing.image ? thing.image.src : "none"}</p>
@@ -95,6 +101,8 @@ export function populateThingEditor(thing) {
 		<p>Draw: ${thing.draw ? thing.draw.toString() : "none"}</p>
 	`;
 
+	thingEditor_content.innerHTML = contentString;
+
 	// add event listeners
 	const aliveCheckbox = thingEditor.querySelector("#thingEditor_alive");
 	aliveCheckbox.addEventListener("change", () => {
@@ -104,7 +112,7 @@ export function populateThingEditor(thing) {
 }
 
 export function drawHighlight() {
-	if(!selectedThing) {
+	if (!selectedThing) {
 		return;
 	}
 
@@ -116,11 +124,10 @@ export function drawHighlight() {
 		height: 0,
 	}
 
-	if(selectedThing.image) {
+	if (selectedThing.image) {
 		bounds.width = selectedThing.image.width;
 		bounds.height = selectedThing.image.height;
-	}
-	else if(selectedThing.text) {
+	} else if (selectedThing.text) {
 		Squids.ctx.font = `${selectedThing.font.size}px ${selectedThing.font.family}`;
 		bounds.width = Squids.ctx.measureText(selectedThing.text).width;
 		bounds.height = selectedThing.font.size;
@@ -137,6 +144,7 @@ export function deselect() {
 }
 
 const r8_thing = rplc8("#r8_thing");
+
 export function rplc8ThingsList() {
 	r8_thing.update(Squids.things, (element, thing) => {
 		element.addEventListener("click", () => {

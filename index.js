@@ -30,7 +30,7 @@ function createWindow() {
 		height: height,
 		x: x,
 		y: y,
-		title: "Game",
+		title: "VisualThings",
 		autoHideMenuBar: true,
 		backgroundColor: "#fff",
 		fullscreenable: true,

@@ -131,3 +131,12 @@ html {
 	appearance: none;
 	visibility: hidden;
 }
+
+
+.flex {
+	display: flex;
+}
+
+.flow-column {
+	flex-flow: column nowrap;
+}

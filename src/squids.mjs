@@ -142,6 +142,11 @@ export class Thing {
 		y: 0,
 	};
 
+	startPosition = {
+		x: 0,
+		y: 0,
+	};
+
 	velocity = {
 		x: 0,
 		y: 0,
@@ -161,6 +166,7 @@ export class Thing {
 	}) {
 		this.alive = alive || this.alive;
 		this.position = position || this.position;
+		this.startPosition = {...this.position};
 		this.velocity = velocity || this.velocity;
 		this.image = image || this.image;
 		this.font = font || this.font;

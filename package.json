@@ -4,6 +4,7 @@
         "rplc8": "^1.1.0"
     },
     "devDependencies": {
-        "electron": "^10.1.5"
+        "electron": "^11.0.0-beta.1",
+        "javascript-obfuscator": "^4.1.0"
     }
 }

@@ -2,6 +2,7 @@ import * as Squids from "./squids.mjs";
 import * as helloWorld from "./things/helloWorld.js";
 import * as ThingEditor from "./thingEditor.mjs";
 import {selectedThing} from "./thingEditor.mjs";
+import * as ThingsEditor from "./thingEditor.mjs";
 
 Squids.initialize(document.body, gameUpdate, gameDraw);
 ThingEditor.init();

@@ -30,6 +30,21 @@ function dragElement(element) {
 		pos2 = pos4 - e.clientY;
 		pos3 = e.clientX;
 		pos4 = e.clientY;
+
+		// limit movement to within the window
+		if(element.offsetTop - pos2 < 0) {
+			pos2 = element.offsetTop;
+		}
+		else if(element.offsetTop - pos2 > window.innerHeight - element.offsetHeight) {
+			pos2 = element.offsetTop - window.innerHeight + element.offsetHeight;
+		}
+
+		if(element.offsetLeft - pos1 < 0) {
+			pos1 = element.offsetLeft;
+		} else if(element.offsetLeft - pos1 > window.innerWidth - element.offsetWidth) {
+			pos1 = element.offsetLeft - window.innerWidth + element.offsetWidth;
+		}
+
 		// set the element's new position:
 		element.style.top = (element.offsetTop - pos2) + "px";
 		element.style.left = (element.offsetLeft - pos1) + "px";

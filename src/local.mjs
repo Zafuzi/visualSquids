@@ -1,6 +1,7 @@
 import * as Squids from "./squids.mjs";
 import * as helloWorld from "./things/helloWorld.js";
 import * as ThingEditor from "./thingEditor.mjs";
+import {selectedThing} from "./thingEditor.mjs";
 
 Squids.initialize(document.body, gameUpdate, gameDraw);
 ThingEditor.init();
@@ -13,6 +14,7 @@ window.addEventListener("resize", () => {
 });
 
 Squids.canvas.addEventListener("click", (evt) => {
+
 	// determine if click happened on a thing
 	const things = Squids.things.filter(thing => thing.alive);
 	const clickedThing = things.find(thing => {
@@ -39,8 +41,13 @@ Squids.canvas.addEventListener("click", (evt) => {
 		}
 	});
 
-	if(clickedThing) {
+	if(clickedThing && clickedThing !== selectedThing) {
 		ThingEditor.populateThingEditor(clickedThing);
+		return;
+	}
+
+	if(ThingEditor.selectedThing) {
+		ThingEditor.deselect();
 		return;
 	}
 

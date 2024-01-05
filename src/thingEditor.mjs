@@ -62,6 +62,10 @@ export function init() {
 }
 
 export function populateThingEditor(thing) {
+	if(!thing) {
+		thingEditor_content.innerHTML = "Nothing selected";
+		return;
+	}
 	selectedThing = thing;
 	thingEditor_content.innerHTML = `
 		<p>Position: ${thing.position.x}, ${thing.position.y}</p>	
@@ -102,4 +106,9 @@ export function drawHighlight() {
 	// draw highlight
 	Squids.ctx.strokeStyle = "white";
 	Squids.ctx.strokeRect(bounds.x, bounds.y, bounds.width, bounds.height);
+}
+
+export function deselect() {
+	selectedThing = null;
+	populateThingEditor();
 }

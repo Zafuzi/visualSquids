@@ -1,69 +1,56 @@
+const fs = require("fs");
 const path = require("path");
+const express = require("express");
+const bodyParser = require("body-parser");
 
-const {
-	app,
-	BrowserWindow,
-	screen,
-	ipcMain,
-} = require('electron');
+const multer  = require('multer')
+const upload = multer({ dest: './src/things/' })
 
-var dev = process.env.APP_DEV ? (process.env.APP_DEV.trim() === "true") : false;
+const app = express();
+app.use(express.static("src"));
+app.use(bodyParser.json());
 
-if (dev) {
-	try {
-		require('electron-reloader')(module);
-	} catch (e) {
-		console.log(e);
+app.post("/things/new", upload.single("thing"), (req, res) => {
+	const {filename} = req.body;
+	if(!filename) {
+		res.status(400).send("No filename provided.");
+		return;
 	}
-}
 
-let win;
+	// set upload to have the correct filename
+	fs.renameSync(path.join(__dirname, "src", "things", req.file.filename), path.join(__dirname, "src", "things", `${filename}.js`));
+	res.send("ok");
+});
 
-function createWindow() {
-	let displays = screen.getAllDisplays();
-	let width = dev ? displays[0].bounds.width / 2 : 1600;
-	let height = dev ? displays[0].bounds.height : 900;
-	let x = dev ? displays[0].bounds.width / 2 : (displays[0].bounds.width / 2) - width / 2;
-	let y = dev ? 0 : (displays[0].bounds.height / 2) - height / 2;
-	win = new BrowserWindow({
-		width: width,
-		height: height,
-		x: x,
-		y: y,
-		title: "VisualThings",
-		autoHideMenuBar: true,
-		backgroundColor: "#fff",
-		fullscreenable: true,
-		titleBarStyle: "hiddenInset",
-		webPreferences: {
-			contextIsolation: true,
-			nodeIntegration: true,
-			preload: path.join(__dirname, 'src/preload.js'),
-		},
+app.post("/api", (req, res) => {
+	const {action} = req.body;
 
-	})
+	if(action === "loadThings") {
+		fs.readdir(path.join(__dirname, "src", "things"), (err, files) => {
+			if(err) {
+				res.status(500).send("Error reading things directory.");
+				return;
+			}
 
-	win.loadFile('src/index.html')
+			res.send(files);
+		});
 
-	if (dev) {
-		win.webContents.openDevTools()
+		return;
 	}
-}
 
-app.whenReady().then(createWindow)
+	if(action === "deleteThing") {
+		const {filename} = req.body;
+		if(!filename) {
+			res.status(400).send("No filename provided.");
+			return;
+		}
 
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit()
+		fs.rmSync(path.join(__dirname, "src", "things", `${filename}.js`));
+		res.send("ok");
+		return;
 	}
-})
 
-app.on('activate', () => {
-	if (BrowserWindow.getAllWindows().length === 0) {
-		createWindow()
-	}
-})
+	res.send("Error: no action provided.");
+});
 
-ipcMain.on("ping", (evt, args) => {
-	win.webContents.send("ping", "Electron says hello");
-})
+app.listen("3000");

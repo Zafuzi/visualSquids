@@ -104,7 +104,7 @@ export function start() {
 }
 
 export function default_draw(thing) {
-	if(!thing.alive) {
+	if(!thing?.alive) {
 		return;
 	}
 
@@ -136,6 +136,7 @@ export class Thing {
 	id = seq();
 
 	alive = false;
+	name = null;
 
 	position = {
 		x: 0,
@@ -161,10 +162,14 @@ export class Thing {
 
 	constructor({
 		alive, position, velocity, image, font, text, color, stroke,
-		draw = default_draw,
+		name,
 		update = () => {},
+		draw = () => {
+			default_draw(this);
+		}
 	}) {
 		this.alive = alive || this.alive;
+		this.name = name || this.name;
 		this.position = position || this.position;
 		this.startPosition = {...this.position};
 		this.velocity = velocity || this.velocity;

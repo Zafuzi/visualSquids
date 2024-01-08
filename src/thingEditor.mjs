@@ -88,6 +88,7 @@ export function populateThingEditor(thing, doFullUpdate = false) {
 				Alive
 				<input type="checkbox" id="thingEditor_alive" name="thingEditor_alive" ${thing.alive ? "checked" : ""}>
 			</label>
+			<button id="deleteThing">Delete</button>
 		</form>
 		
 		<p>Position: ${thing.position.x}, ${thing.position.y}</p>	
@@ -108,6 +109,29 @@ export function populateThingEditor(thing, doFullUpdate = false) {
 	aliveCheckbox.addEventListener("change", () => {
 		thing.alive = aliveCheckbox.checked;
 		console.log(thing);
+	});
+
+	const deleteButton = thingEditor.querySelector("#deleteThing");
+	deleteButton.addEventListener("click", (evt) => {
+		evt.preventDefault();
+
+		fetch("/api/", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				action: "deleteThing",
+				filename: thing.name,
+			})
+		})
+			.then(() => {
+				thing.alive = false;
+				// delete thing from Squids.things array
+				Squids.removeThing(thing);
+				deselect();
+				rplc8ThingsList();
+			});
 	});
 }
 
